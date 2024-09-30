@@ -3,7 +3,10 @@ package com.example.basicauth.config;
 import com.example.basicauth.authentication.CustomAuthenticationFilter;
 import com.example.basicauth.authentication.CustomAuthenticationProvider;
 import com.example.basicauth.authentication.CustomUserDetailsService;
+import com.example.basicauth.handler.CustomAccessDeniedHandler;
+import com.example.basicauth.handler.CustomAuthenticationEntryPoint;
 import com.example.basicauth.repository.MemberRepository;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,48 +23,43 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean
-    public UserDetailsService userDetailsService(final PasswordEncoder passwordEncoder) {
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("1234"))
-                .roles("ADMIN", "USER")
-                .build();
-
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder.encode("1234"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
-    }
+    private static final String[] WHITE_LIST = {
+            "/api/v1/auth/login",
+            "/api/v1/auth/signup"
+    };
 
     @Bean
     public SecurityFilterChain basicAuthFilterChain(final HttpSecurity http,
-                                                    final CustomAuthenticationFilter customAuthenticationFilter) throws Exception {
+                                                    final CustomAuthenticationFilter authenticationFilter,
+                                                    final CustomAuthenticationEntryPoint authenticationEntryPoint,
+                                                    final CustomAccessDeniedHandler accessDeniedHandler) throws Exception {
         http
                 .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .addFilter(customAuthenticationFilter)
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/auth/signup").permitAll()
-                        .requestMatchers("/auth/user/**").hasRole("USER")
-                        .requestMatchers("/auth/admin/**").hasRole("ADMIN")
+                        .requestMatchers(WHITE_LIST).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionConfig -> exceptionConfig
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
                 );
 
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       AuthenticationProvider customAuthenticationProvider) throws Exception {
+    public AuthenticationManager authenticationManager(final HttpSecurity http,
+                                                       final AuthenticationProvider customAuthenticationProvider) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .authenticationProvider(customAuthenticationProvider)
                 .build();
@@ -69,19 +67,19 @@ public class SecurityConfiguration {
 
     @Bean
     public CustomAuthenticationFilter customAuthenticationFilter(final AuthenticationManager authenticationManager) {
-        CustomAuthenticationFilter filter = new CustomAuthenticationFilter(new AntPathRequestMatcher("/auth/login", "POST"));
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter(new AntPathRequestMatcher("/api/v1/auth/login", "POST"));
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }
 
     @Bean
-    public AuthenticationProvider customAuthenticationProvider(final CustomUserDetailsService customUserDetailsService,
+    public CustomAuthenticationProvider customAuthenticationProvider(final CustomUserDetailsService customUserDetailsService,
                                                                final PasswordEncoder passwordEncoder) {
         return new CustomAuthenticationProvider(customUserDetailsService, passwordEncoder);
     }
 
     @Bean
-    CustomUserDetailsService customUserDetailsService(final MemberRepository memberRepository) {
+    public CustomUserDetailsService customUserDetailsService(final MemberRepository memberRepository) {
         return new CustomUserDetailsService(memberRepository);
     }
 
