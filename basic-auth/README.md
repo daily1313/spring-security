@@ -44,6 +44,7 @@
 인증 정보는 최종적으로 인메모리 세션 저장소인 SecurityContextHolder에 세션-쿠키 방식으로 저장
 
 Spring Security Architecture
+
 <img width="608" alt="architecture" src="https://github.com/user-attachments/assets/e9dd6c6c-dfb8-4826-8606-2b6812fb2342">
 
 **동작 절차**
