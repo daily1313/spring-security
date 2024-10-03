@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class Member extends AbstractEntity implements UserDetails {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(unique = true, nullable = false, length = 20)
     private String username;
 
     @Column(nullable = false)
@@ -46,6 +47,9 @@ public class Member extends AbstractEntity implements UserDetails {
 
     @Column(nullable = false, length = 15)
     private String phoneNumber;
+
+    @Column
+    private LocalDateTime lastLoginTime;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -80,5 +84,9 @@ public class Member extends AbstractEntity implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void updateLastLoginTime() {
+        lastLoginTime = LocalDateTime.now();
     }
 }
