@@ -38,15 +38,10 @@ public class AuthService {
     @Transactional
     public void login(final LoginRequest loginRequest) {
         Member member = findMember(loginRequest);
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword());
-
-        Authentication authentication = authenticationManager.authenticate(token);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        member.updateLastLoginTime();
     }
 
-    private Member findMember(LoginRequest loginRequest) {
+    private Member findMember(final LoginRequest loginRequest) {
         return memberRepository.findByUsername(loginRequest.username())
                 .orElseThrow(() -> new UsernameNotFoundException(loginRequest.username()));
     }
