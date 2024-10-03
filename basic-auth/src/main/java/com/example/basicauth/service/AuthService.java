@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final MemberRepository memberRepository;
 
     @Transactional
