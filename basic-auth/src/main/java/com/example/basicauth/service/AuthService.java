@@ -34,6 +34,8 @@ public class AuthService {
     public void login(final LoginRequest loginRequest) {
         Member member = findMember(loginRequest);
         member.updateLastLoginTime();
+
+        memberRepository.save(member);
     }
 
     private Member findMember(final LoginRequest loginRequest) {
