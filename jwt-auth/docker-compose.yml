@@ -1,0 +1,29 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.32
+    container_name: jwt-mysql-server
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: jwtauth
+      MYSQL_USER: test
+      MYSQL_PASSWORD: 1234
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./data/:/var/lib/mysql
+  redis:
+    image: redis:latest
+    container_name: jwt-redis-server
+    command: redis-server --requirepass test1234 --port 6379
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
