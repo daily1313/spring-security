@@ -67,6 +67,4 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             throw new Exception(e.getMessage(), e.getCause());
         }
     }
-
-
 }
