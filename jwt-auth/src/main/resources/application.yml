@@ -1,1 +1,37 @@
-spring.application.name=jwt-auth
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(kpubFcC8tHhp/kfL64nfpcvN8YAzpFYMZPz3LiTNMhBK8Nvf8LaHQTOeyhCesgq7)
+    username: ENC(HuGj6bz1mbfrNC3qh6Tb7g==)
+    password: ENC(vwm1CjAKsdqDy2GbZy6VZg==)
+
+  jasypt:
+    encryptor:
+      bean: jasyptStringEncryptor
+
+  data:
+    redis:
+      host: ENC(9FKkZEjzT6gsP+g6Xkc1rTvvjeC4i5KY)
+      port: 6379
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    root: INFO
+
+jwt:
+  secret: ENC(c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK)
+  token-validity-in-seconds: ENC(hx0PlXbu0EVKMCFOGYM2BA==)
