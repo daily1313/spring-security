@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@EnableEncryptableProperties
 @Configuration
 public class JasyptConfig {
 
@@ -20,12 +19,11 @@ public class JasyptConfig {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(ENCRYPT_KEY);
-        config.setPoolSize("1");
         config.setAlgorithm("PBEWithMD5AndDES");
-        config.setStringOutputType("base64");
-        config.setKeyObtentionIterations("1000");
+        config.setKeyObtentionIterations(1000);
+        config.setPoolSize(1);
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-        config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
+        config.setStringOutputType("base64");
         encryptor.setConfig(config);
         return encryptor;
     }

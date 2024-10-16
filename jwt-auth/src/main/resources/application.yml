@@ -8,6 +8,7 @@ spring:
   jasypt:
     encryptor:
       bean: jasyptStringEncryptor
+      password: ${ENCRYPT_KEY}
 
   data:
     redis:
