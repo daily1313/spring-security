@@ -33,6 +33,7 @@ logging:
   level:
     root: INFO
 
-jwt:
-  secret: ENC(c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK)
-  token-validity-in-seconds: ENC(hx0PlXbu0EVKMCFOGYM2BA==)
+  jwt:
+    secret: ENC(c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK)
+    access-token-expiration-time: ENC(ZdL6uy0mw5FiJGtTkDul2A==)
+    refresh-token-expiration-time: ENC(2KzuRJlWzm2+F5F5i/MekMP+wlski1Ty)
