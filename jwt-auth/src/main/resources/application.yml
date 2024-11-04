@@ -29,11 +29,13 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
 
+  jwt:
+    secret: ENC(bJtmrRD6R/UOPjiY/1N0LtCT8USf2CVh6UC9ESc6vh5BE8gLZ/YD9eTnD9yDzwwGtDUw+gAjwDvoQqrIfFfrPA4gwleTWLt9aXXuLgKCEEoHBLaR0PJwrj06aSeF1rDWGL1VAXG1gl7H8OkjsranN9bu/e8IykbOR9AX3nT9gkWYz747TTYbqQItL8nvA/e9)
+    access-token-expiration-time: ENC(ZdL6uy0mw5FiJGtTkDul2A==)
+    refresh-token-expiration-time: ENC(2KzuRJlWzm2+F5F5i/MekMP+wlski1Ty)
+
 logging:
   level:
     root: INFO
 
-  jwt:
-    secret: ENC(c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK)
-    access-token-expiration-time: ENC(ZdL6uy0mw5FiJGtTkDul2A==)
-    refresh-token-expiration-time: ENC(2KzuRJlWzm2+F5F5i/MekMP+wlski1Ty)
+
