@@ -85,8 +85,4 @@ public class Member extends AbstractEntity implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-    public void updateLastLoginTime() {
-        lastLoginTime = LocalDateTime.now();
-    }
 }
