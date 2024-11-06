@@ -1,5 +1,6 @@
 package com.example.jwtauth.authentication.jwt;
 
+import com.example.jwtauth.handler.exception.JwtAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Getter
 @Component
 public class JwtProvider {
@@ -102,15 +105,16 @@ public class JwtProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (UnsupportedJwtException e) {
-            return false;
+            throw new JwtAuthenticationException("Unsupported JWT token");
         } catch (MalformedJwtException e) {
-            return false;
+            throw new JwtAuthenticationException("Malformed JWT token");
         } catch (SignatureException e) {
-            return false;
+            throw new JwtAuthenticationException("Invalid JWT signature");
         } catch (JwtException e) {
-            return false;
+            throw new JwtAuthenticationException("Invalid JWT token");
         } catch (Exception e) {
-            return false;
+            log.error("error message: {}", e.getMessage());
+            throw new JwtAuthenticationException();
         }
     }
 }
