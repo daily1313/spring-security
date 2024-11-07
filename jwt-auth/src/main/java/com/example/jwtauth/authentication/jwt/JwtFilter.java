@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtFilter extends OncePerRequestFilter {
 
     private static final String[] WHITE_LIST = {
-            "/api/v2/auth/sign-in", "/api/v2/auth/sign-up"
+            "/api/v2/auth/login", "/api/v2/auth/signup"
     };
 
     private final JwtProvider jwtProvider;
