@@ -21,7 +21,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/signup")
     public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
         Member member = authService.signUp(signUpRequest);
         SignUpResponse signUpResponse = SignUpResponse.of(member.getUsername(), member.getPassword(),
