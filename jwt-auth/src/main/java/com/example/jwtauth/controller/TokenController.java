@@ -2,6 +2,7 @@ package com.example.jwtauth.controller;
 
 import com.example.jwtauth.service.TokenService;
 import com.example.jwtauth.service.dto.TokenRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class TokenController {
     private final TokenService tokenService;
 
     @PostMapping("/reissue")
-    public ResponseEntity<String> reissueAccessToken(@RequestBody TokenRequest tokenRequest) {
+    public ResponseEntity<String> reissueAccessToken(@Valid @RequestBody final TokenRequest tokenRequest) {
         String accessToken = tokenService.reissueAccessToken(tokenRequest.refreshToken());
 
         return ResponseEntity.status(HttpStatus.OK)

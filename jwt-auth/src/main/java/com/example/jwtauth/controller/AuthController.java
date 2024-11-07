@@ -6,6 +6,7 @@ import com.example.jwtauth.domain.Member;
 import com.example.jwtauth.service.AuthService;
 import com.example.jwtauth.service.dto.LoginRequest;
 import com.example.jwtauth.service.dto.SignUpRequest;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<SignUpResponse> signUp(@Valid @RequestBody final SignUpRequest signUpRequest) {
         Member member = authService.signUp(signUpRequest);
         SignUpResponse signUpResponse = SignUpResponse.of(member.getUsername(), member.getPassword(),
                 member.getNickname(), member.getGender(), member.getPhoneNumber());
@@ -33,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody final LoginRequest loginRequest) {
         List<String> loginToken = authService.login(loginRequest);
         LoginResponse loginResponse = new LoginResponse(loginToken.get(0), loginToken.get(1));
         return ResponseEntity.status(HttpStatus.OK)
