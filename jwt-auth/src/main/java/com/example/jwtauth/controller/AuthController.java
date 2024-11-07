@@ -6,6 +6,7 @@ import com.example.jwtauth.domain.Member;
 import com.example.jwtauth.service.AuthService;
 import com.example.jwtauth.service.dto.LoginRequest;
 import com.example.jwtauth.service.dto.SignUpRequest;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        String accessToken = authService.login(loginRequest);
-        LoginResponse loginResponse = new LoginResponse(accessToken);
+        List<String> loginToken = authService.login(loginRequest);
+        LoginResponse loginResponse = new LoginResponse(loginToken.get(0), loginToken.get(1));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(loginResponse);
     }

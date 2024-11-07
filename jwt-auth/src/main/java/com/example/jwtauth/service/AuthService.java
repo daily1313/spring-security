@@ -5,9 +5,11 @@ import com.example.jwtauth.domain.Member;
 import com.example.jwtauth.repository.MemberRepository;
 import com.example.jwtauth.service.dto.LoginRequest;
 import com.example.jwtauth.service.dto.SignUpRequest;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.util.Pair;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class AuthService {
     }
 
     @Transactional
-    public String login(final LoginRequest loginRequest) {
+    public List<String> login(final LoginRequest loginRequest) {
         Member member = findMember(loginRequest);
 
         String accessToken = jwtProvider.createAccessToken(member.getUsername());
@@ -49,7 +51,7 @@ public class AuthService {
                 TimeUnit.MILLISECONDS
         );
 
-        return accessToken;
+        return List.of(accessToken, refreshToken);
     }
 
     private Member findMember(final LoginRequest loginRequest) {
