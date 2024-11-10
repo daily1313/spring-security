@@ -1,5 +1,6 @@
 package com.example.jwtauth.controller;
 
+import com.example.jwtauth.controller.dto.TokenResponse;
 import com.example.jwtauth.service.TokenService;
 import com.example.jwtauth.service.dto.TokenRequest;
 import jakarta.validation.Valid;
@@ -19,10 +20,12 @@ public class TokenController {
     private final TokenService tokenService;
 
     @PostMapping("/reissue")
-    public ResponseEntity<String> reissueAccessToken(@Valid @RequestBody final TokenRequest tokenRequest) {
+    public ResponseEntity<TokenResponse> reissueAccessToken(@Valid @RequestBody final TokenRequest tokenRequest) {
         String accessToken = tokenService.reissueAccessToken(tokenRequest.refreshToken());
 
+        TokenResponse tokenResponse = new TokenResponse(accessToken);
+
         return ResponseEntity.status(HttpStatus.OK)
-                .body(accessToken);
+                .body(tokenResponse);
     }
 }
