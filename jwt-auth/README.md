@@ -76,3 +76,41 @@
 
 클라이언트는 Access Token (JWT Token) 을 HTTP 헤더에 실어 서버에 전송합니다. 토큰은 **임의로 생성된 비밀번호**
 같이 동작합니다. 제한된 수명을 가지고, 새로운 토큰은 한번 만료되면 새로 생성되어야합니다.(Refresh Token)
+
+**Jwt-auth API** 
+
+**회원가입**
+
+<img width="1023" alt="스크린샷 2024-11-10 오후 2 15 13" src="https://github.com/user-attachments/assets/4b7f7d42-04f3-4a37-bb7d-0430c528c032">
+
+**로그인**
+
+<img width="1030" alt="스크린샷 2024-11-10 오후 2 15 51" src="https://github.com/user-attachments/assets/44add9ee-6638-49ae-9af0-614ea08086b0">
+
+**액세스 토큰 재발급**
+
+<img width="1025" alt="스크린샷 2024-11-10 오후 2 16 33" src="https://github.com/user-attachments/assets/f4994b13-8641-4a0b-b93f-867b48c83373">
+
+**Redis-Cli**
+
+<img width="1338" alt="스크린샷 2024-11-10 오후 2 42 36" src="https://github.com/user-attachments/assets/0a20aa81-7797-4d86-a562-305818d51ddf">
+
+**Jwt(Json Web Token)에 Redis 도입배경**
+
+**Redis**
+
+* key-value 쌍의 hashmap과 같은 구조를 가진 NoSQL DB입니다.
+* ssd/hhd와 같은 보조기억장치가 아닌, RAM에 데이터를 저장하는 In-Memory 방식의 DB
+* RDB에 비해 속도 측면에서 뛰어납니다.
+* RDB
+  * ssd/hdd → (load) → ram → (read) → cpu
+* Redis 
+  * ram → (read) → cpu
+
+**Redis 도입배경**
+
+* TTL (Time-To-Live) 지정이 가능합니다.
+  * TTL: 데이터의 만료일
+  * 토큰의 만료일을 설정하여, Redis에서 TTL이 지남에 따라 토큰이 삭제되기에 리소스 관리를 효율적으로 할 수 있습니다.
+* 성능적인 측면에서 RDB보다 뛰어납니다.
+  * In-Memory 방식을 채택하여 ssd/hdd에서 load하는 시간을 없애기에 RDB에 비해 속도가 빠릅니다.
