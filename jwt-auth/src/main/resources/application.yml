@@ -14,6 +14,7 @@ spring:
     redis:
       host: ENC(9FKkZEjzT6gsP+g6Xkc1rTvvjeC4i5KY)
       port: 6379
+      password: ENC(FOMb9bdSbhti8LOnMC5NB/AfsR0gKbV5)
 
   jpa:
     open-in-view: false
