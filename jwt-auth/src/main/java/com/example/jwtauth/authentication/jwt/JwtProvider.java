@@ -70,7 +70,7 @@ public class JwtProvider {
                 .setClaims(claims)
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
-                .signWith(secretKey, SignatureAlgorithm.ES512)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -83,7 +83,7 @@ public class JwtProvider {
                 .setClaims(claims)
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
-                .signWith(secretKey, SignatureAlgorithm.ES512)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
