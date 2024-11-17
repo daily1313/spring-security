@@ -35,6 +35,19 @@ spring:
     access-token-expiration-time: ENC(ZdL6uy0mw5FiJGtTkDul2A==)
     refresh-token-expiration-time: ENC(2KzuRJlWzm2+F5F5i/MekMP+wlski1Ty)
 
+oauth:
+  kakao:
+    client-id: ENC(bpBcjwyd+3gW3s5JFIE6ZCI12kiDWifpUxxg8tmHomKWk+1WlpKAFYlvJhPkf5Ya)
+    url:
+      auth: https://kauth.kakao.com
+      api: https://kapi.kakao.com
+  naver:
+    client-id: ENC(orvuibHn4fcsapWYaTHfMmjMHpNw15m0vEpDSRg7KkA=)
+    secret: ENC(fAcS65R52Gh4hoTeNwnE3ND2FNyy15pi)
+    url:
+      auth: https://nid.naver.com
+      api: https://openapi.naver.com
+
 logging:
   level:
     root: INFO
