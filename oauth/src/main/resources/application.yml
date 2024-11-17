@@ -1,1 +1,40 @@
-spring.application.name=oauth
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(0nkvvMq8BL8jwxVQizt5b/LfYzUtwiwW3UbikEqPbppX2AVzvSZ+YWRjLJl2jo2H)
+    username: ENC(KSLsZ1xqf6GMRdi3O+VwuQ==)
+    password: ENC(PE9b/T2brTIffpYUbIE3Fg==)
+
+  jasypt:
+    encryptor:
+      bean: jasyptStringEncryptor
+      password: ${ENCRYPT_KEY}
+
+  data:
+    redis:
+      host: ENC(yMtu2WoDv536b1p8Jwe+HEdwaf1HLZml)
+      port: 6380
+      password: ENC(DplBI6462ZTfxUW5+gqSl0gAoRHCzHK5)
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+
+  jwt:
+    secret: ENC(HpafP7eADWRokX5bquVcu4OezzRerUSZkJTUNX0Z0EGtIHLl6VX+0/0cJGdWkCJOcDd0RyAdQZW5SZS89FdX1ZYhuw2cixVmK1xIzxMeVc2P+N4FXcIHArtJxWVjJAKziN2wVuSKgFDitVZgBdU6Gy9lujKTKBzd1eSPCB61kllKU6/RW8uFdOk1l8KXwBF6)
+    access-token-expiration-time: ENC(ZdL6uy0mw5FiJGtTkDul2A==)
+    refresh-token-expiration-time: ENC(2KzuRJlWzm2+F5F5i/MekMP+wlski1Ty)
+
+logging:
+  level:
+    root: INFO
