@@ -3,12 +3,10 @@ package com.example.oauth.domain;
 import com.example.oauth.common.AbstractEntity;
 import com.example.oauth.domain.enums.OAuthProviderType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
