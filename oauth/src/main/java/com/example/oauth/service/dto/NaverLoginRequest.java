@@ -18,3 +18,4 @@ public record NaverLoginRequest(String authorizationCode, String state) implemen
         body.add("state", state);
         return body;
     }
+}

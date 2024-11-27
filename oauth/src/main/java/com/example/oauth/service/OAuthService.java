@@ -45,4 +45,6 @@ public class OAuthService {
                 .build();
 
         return memberRepository.save(member)
-        
+                .getId();
+    }
+}

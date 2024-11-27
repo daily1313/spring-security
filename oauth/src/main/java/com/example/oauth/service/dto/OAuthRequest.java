@@ -8,3 +8,4 @@ public interface OAuthRequest {
     OAuthProviderType oAuthProviderType();
 
     MultiValueMap<String, String> toBody();
+}

@@ -66,4 +66,16 @@ public class KakaoApiClient implements OAuthApiClient {
 //        httpHeaders.set("Authorization", "Bearer " + accessToken);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("property_keys", "[\"kakao_account.email\", \"kakao_ac
+        body.add("property_keys", "[\"kakao_account.email\", \"kakao_account.profile\"]");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, httpHeaders);
+
+        try {
+            KakaoUserInfoResponse kakaoUserInfoResponse = restTemplate.postForObject(url, request, KakaoUserInfoResponse.class);
+            return kakaoUserInfoResponse;
+        } catch (HttpClientErrorException e) {
+            System.err.println("Error response from Kakao API: " + e.getResponseBodyAsString());
+            throw e;
+        }
+    }
+}

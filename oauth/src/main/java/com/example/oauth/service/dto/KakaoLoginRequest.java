@@ -17,3 +17,4 @@ public record KakaoLoginRequest(String authorizationCode) implements OAuthReques
         body.add("code", authorizationCode);
         return body;
     }
+}
