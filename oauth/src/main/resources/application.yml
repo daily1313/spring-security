@@ -47,4 +47,8 @@ oauth:
     secret: ENC(fAcS65R52Gh4hoTeNwnE3ND2FNyy15pi)
     url:
       auth: https://nid.naver.com
-      api: http
+      api: https://openapi.naver.com
+
+logging:
+  level:
+    root: DEBUG
