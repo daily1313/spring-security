@@ -1,6 +1,8 @@
 package com.example.jwtauth.domain;
 
 import com.example.jwtauth.common.AbstractEntity;
+import com.example.jwtauth.handler.exception.PasswordNotEqualsException;
+import com.example.jwtauth.handler.exception.UsernameNotEqualsException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -84,5 +86,15 @@ public class Member extends AbstractEntity implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void validateLoginInfo(final String inputUsername, final String inputPassword) {
+        if(!this.username.equals(inputUsername)) {
+            throw new UsernameNotEqualsException();
+        }
+
+        if(!this.password.equals(inputPassword)) {
+            throw new PasswordNotEqualsException();
+        }
     }
 }
