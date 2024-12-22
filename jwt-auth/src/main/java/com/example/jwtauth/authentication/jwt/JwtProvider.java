@@ -117,4 +117,17 @@ public class JwtProvider {
             throw new JwtAuthenticationException();
         }
     }
+
+    public Long getExpiration(String accessToken) {
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody()
+                .getExpiration();
+
+        Long now = new Date().getTime();
+
+        return expiration.getTime() - now;
+    }
 }

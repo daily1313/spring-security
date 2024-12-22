@@ -2,6 +2,7 @@ package com.example.jwtauth.controller;
 
 import com.example.jwtauth.controller.dto.TokenResponse;
 import com.example.jwtauth.service.TokenService;
+import com.example.jwtauth.service.dto.LogoutRequest;
 import com.example.jwtauth.service.dto.TokenRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,13 @@ public class TokenController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(tokenResponse);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody final LogoutRequest logoutRequest) {
+        tokenService.logout(logoutRequest);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
     }
 }

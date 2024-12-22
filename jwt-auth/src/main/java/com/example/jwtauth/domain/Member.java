@@ -87,14 +87,4 @@ public class Member extends AbstractEntity implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-    public void validateLoginInfo(final String inputUsername, final String inputPassword) {
-        if(!this.username.equals(inputUsername)) {
-            throw new UsernameNotEqualsException();
-        }
-
-        if(!this.password.equals(inputPassword)) {
-            throw new PasswordNotEqualsException();
-        }
-    }
 }

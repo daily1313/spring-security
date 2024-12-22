@@ -2,7 +2,9 @@ package com.example.jwtauth.service;
 
 import com.example.jwtauth.authentication.jwt.JwtProvider;
 import com.example.jwtauth.domain.Member;
+import com.example.jwtauth.handler.exception.PasswordNotEqualsException;
 import com.example.jwtauth.handler.exception.UsernameAlreadyExistsException;
+import com.example.jwtauth.handler.exception.UsernameNotEqualsException;
 import com.example.jwtauth.repository.MemberRepository;
 import com.example.jwtauth.service.dto.LoginRequest;
 import com.example.jwtauth.service.dto.SignUpRequest;
@@ -42,7 +44,8 @@ public class AuthService {
     @Transactional
     public List<String> login(final LoginRequest loginRequest) {
         Member member = findMember(loginRequest);
-        member.validateLoginInfo(loginRequest.username(), loginRequest.password());
+        validateLoginInfo(member.getUsername(), loginRequest.username(),
+               loginRequest.password(), member.getPassword());
 
         String accessToken = jwtProvider.createAccessToken(member.getUsername());
         String refreshToken = jwtProvider.createRefreshToken(member.getUsername());
@@ -65,6 +68,17 @@ public class AuthService {
     private void validateSignUpInfo(final String username) {
         if(memberRepository.existsByUsername(username)) {
             throw new UsernameAlreadyExistsException(username);
+        }
+    }
+
+    public void validateLoginInfo(final String username, final String inputUsername,
+                                  final String inputPassword, final String password) {
+        if(!username.equals(inputUsername)) {
+            throw new UsernameNotEqualsException();
+        }
+
+        if(!passwordEncoder.matches(inputPassword, password)) {
+            throw new PasswordNotEqualsException();
         }
     }
 }
